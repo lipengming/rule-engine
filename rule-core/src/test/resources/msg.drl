@@ -1,0 +1,14 @@
+import com.cubbery.Message
+
+dialect "java"
+lock-on-active true
+no-loop
+rule "msg"
+
+when
+	$msg : Message()
+then
+	$msg.setText("Hello, World!");
+    update( $msg );
+
+end

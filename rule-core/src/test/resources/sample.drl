@@ -1,0 +1,26 @@
+import com.cubbery.SampleFact;
+
+rule "Hello World"
+    when
+        m : SampleFact( status == 1, myMessage : message )
+    then
+        System.out.println( "before " + myMessage );
+        m.setMessage( "Goodbye world!" );
+        m.setStatus( 0 );
+        update( m );
+        System.out.println( "after " + m.getMessage() );
+end
+
+rule "GoodBye"
+    when
+        SampleFact( status == 0, myMessage : message )
+    then
+        System.out.println( myMessage );
+end
+
+rule "Nomal"
+    when
+        SampleFact( status != 0, myMessage : message )
+    then
+        System.out.println( myMessage );
+end

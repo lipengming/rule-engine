@@ -1,0 +1,19 @@
+import com.cubbery.Customer;
+import com.cubbery.Product;
+
+rule "Decrement count"
+when
+	$product : Product(count > 10)
+then
+	$product.setCount($product.getCount() - 1);
+	update($product)
+end
+
+
+rule "Greet customer"
+when
+	$customer : Customer(!greeted)
+then
+	$customer.setGreeted(true);
+	update($customer);
+end
