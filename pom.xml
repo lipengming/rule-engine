@@ -31,7 +31,6 @@
         <mybatis.version>3.1.1</mybatis.version>
         <mysql.version>5.1.29</mysql.version>
         <test-junit>4.10</test-junit>
-        <wangyin-commons-version>1.0.6</wangyin-commons-version>
         <dubbo.version>2.5.3</dubbo.version>
         <guava-version>18.0</guava-version>
     </properties>
