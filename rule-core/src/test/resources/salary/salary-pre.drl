@@ -1,0 +1,89 @@
+package salary;
+
+import com.cubbery.salary.Salary;
+import com.cubbery.salary.Position;
+
+
+dialect  "java"
+
+//参数初始化
+rule "salary-init"
+    when
+
+    then
+end
+
+//计算基本工资
+rule "salary-base-internship"
+    salience 500
+    activation-group "salary-base"
+    when
+        $salary : Salary(position == Position.internship)
+    then
+        $salary.setBase(500);
+end
+
+rule "salary-base-common"
+    salience 500
+    activation-group "salary-base"
+    when
+        $salary : Salary(position == Position.common)
+    then
+        $salary.setBase(1000);
+end
+
+rule "salary-base-manager"
+    salience 500
+    activation-group "salary-base"
+    when
+        $salary : Salary(position == Position.manager)
+    then
+        $salary.setBase(2000);
+end
+
+rule "salary-base-chief"
+    salience 500
+    activation-group "salary-base"
+    when
+        $salary : Salary(position == Position.chief)
+    then
+        $salary.setBase(5000);
+end
+
+
+//计算奖金
+rule "salary-bonus1"
+    salience 404
+    activation-group "salary-bonus"
+    when
+        $salary : Salary(achievement <= 20000)
+    then
+        $salary.setBonus(1000);
+end
+rule "salary-bonus2"
+    salience 403
+    activation-group "salary-bonus"
+    when
+        $salary : Salary(achievement <= 50000 )
+    then
+        $salary.setBonus(2000);
+end
+rule "salary-bonus3"
+    salience 402
+    activation-group "salary-bonus"
+    when
+        $salary : Salary(achievement > 50000)
+    then
+        $salary.setBonus(5000);
+end
+
+
+//计算税前
+rule "salary-pre"
+    salience 300
+    when
+        $salary : Salary()
+    then
+        $salary.setPreTax($salary.getBase() + $salary.getBonus());
+end
+

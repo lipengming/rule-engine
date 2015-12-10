@@ -1,0 +1,30 @@
+
+import com.cubbery.discount.Dish
+import com.cubbery.discount.Order
+import java.util.Iterator
+
+global com.cubbery.discount.DishType $dishType
+global java.util.List $dishes
+global java.lang.Long $shouldPay
+
+
+
+dialect  "mvel"
+
+rule "order"
+    when
+        $order : Order($dishes : dishes,dishes.empty)
+    then
+        $shouldPay = 0L;
+end
+
+rule "dish-fee"
+    when
+        eval(true)
+    then
+        Iterator<Dish> iterator = $dishes.iterator();
+        while (iterator.hasNext()) {
+            Dish dish = iterator.next();
+
+        }
+end

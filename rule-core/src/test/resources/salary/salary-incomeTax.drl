@@ -1,0 +1,38 @@
+package salary;
+dialect  "mvel"
+
+
+import com.cubbery.salary.Salary;
+import com.cubbery.salary.Position;
+
+//计算所得税
+rule "salary-incomeTax1"
+    salience 204
+    activation-group "salary-incomeTax"
+    when
+        $salary : Salary(preTax <= 1800.0)
+    then
+        $salary.setIncomeTax(35.0);
+        System.out.println("--11--");
+end
+rule "salary-incomeTax3"
+    salience 202
+    activation-group "salary-incomeTax"
+    when
+        $salary : Salary(preTax < 8000.0)
+    then
+        $salary.setIncomeTax(0.1 * ($salary.getPreTax() - 1800.0) + 35);
+        System.out.println("--22--");
+end
+rule "salary-incomeTax4"
+    salience 201
+    activation-group "salary-incomeTax"
+    when
+        $salary : Salary()
+    then
+        $salary.setIncomeTax(0.15 * ($salary.getPreTax() - 8000) + 135);
+        System.out.println("--33--");
+end
+
+
+

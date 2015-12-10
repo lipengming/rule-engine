@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.cubbery.rule</groupId>
-            <artifactId>rule-dal</artifactId>
+            <artifactId>rule-dao</artifactId>
         </dependency>
         <dependency>
             <groupId>com.cubbery.rule</groupId>

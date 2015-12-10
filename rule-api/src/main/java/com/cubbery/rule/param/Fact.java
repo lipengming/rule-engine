@@ -3,8 +3,9 @@
  */
 package com.cubbery.rule.param;
 
+import com.cubbery.rule.code.FactDire;
+
 import java.io.Serializable;
-import java.util.HashMap;
 
 /**
  * <b>项目名</b>： rule-parent <br>
@@ -19,5 +20,14 @@ import java.util.HashMap;
  *
  * @version 1.0.0 <br>
  */
-public class Fact extends HashMap<String,Serializable> {
+public abstract class Fact implements Serializable {
+    protected FactDire factDire;
+
+    public FactDire getFactDire() {
+        return factDire;
+    }
+
+    public void setFactDire(FactDire factDire) {
+        this.factDire = factDire;
+    }
 }

@@ -1,0 +1,16 @@
+package salary;
+
+
+import com.cubbery.salary.Salary;
+import com.cubbery.salary.Position;
+
+dialect  "java"
+
+//计算税后
+rule "salary-after"
+    salience 100
+    when
+        $salary : Salary()
+    then
+        $salary.setAfterTax($salary.getPreTax() - $salary.getIncomeTax());
+end

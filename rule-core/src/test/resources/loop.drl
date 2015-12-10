@@ -1,0 +1,40 @@
+import com.cubbery.discount.Dish
+import com.cubbery.discount.Order
+import java.util.Iterator
+import com.cubbery.discount.DishType
+
+dialect  "java"
+
+//循环初始化
+rule "loops-init"
+    salience 300
+    when
+        $order : Order(total == null);
+    then
+        $order.setTotal(0.0);
+        System.out.println("-init-");
+end
+
+//计算
+rule "loops-total"
+    salience 200
+    when
+        $order : Order();
+        $dish : Dish() from $order.dishes;
+    then
+        $dish.setPrice($dish.getPrice() * (1 - $dish.getType().getDis()));
+        $order.setTotal($dish.getPrice() * $dish.getCount() + $order.getTotal());
+        System.out.println("-acc-");
+end
+
+//打印
+rule "loops-print"
+    salience 100
+    when
+        $order : Order();
+        $dish : Dish() from $order.dishes;
+    then
+        System.out.println("-print-");
+        System.out.println($dish);
+end
+

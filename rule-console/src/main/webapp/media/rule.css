@@ -1,0 +1,6 @@
+body {
+    overflow-x : hidden;
+    overflow-y : hidden;
+}
+
+html { overflow: hidden; }
