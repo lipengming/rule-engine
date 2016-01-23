@@ -1,31 +1,37 @@
-
-
 /**
  *添加一个显示
- **/ 
-function addTab(title, href,icon){  
+ **/
+function addTabs(links,icon){
+    links.forEach(function(cell){
+        if(cell && cell.href) addTab(cell.title,cell.href,icon);
+    });
+}
+/**
+ *添加一个显示
+ **/
+function addTab(title, href,icon){
     var tt = $('#main-tabs');
-    if (tt.tabs('exists', title)){//如果tab已经存在,则选中并刷新该tab          
-        tt.tabs('select', title);  
-        refreshTab({tabTitle:title,url:href});  
-    } else {  
-        if (href){  
+    if (tt.tabs('exists', title)){//如果tab已经存在,则选中并刷新该tab
+        tt.tabs('select', title);
+        refreshTab({tabTitle:title,url:href});
+    } else {
+        if (href){
             var content = '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="yes" allowtransparency="yes"  src="'+href+'" style="width:100%;height:100%;" ></iframe>';
-        } else {  
-            var content = '未实现';  
-        }  
-        tt.tabs('add',{  
+        } else {
+            var content = '未实现';
+        }
+        tt.tabs('add',{
             title:title,
             closable:"true",
             cache:"false",
             width:"100%",
             height:document.body.clientHeight,
             style:"padding:1px;overflow:hidden",
-            content:content,  
-            iconCls:icon||'icon-default'  
-        });  
-    }  
-}  
+            content:content,
+            iconCls:icon||'icon-default'
+        });
+    }
+}
 
 /**     
  * 刷新tab  example: {tabTitle:'tabTitle',url:'refreshUrl'} 
@@ -33,12 +39,18 @@ function addTab(title, href,icon){
  * 如果url为空，则默认以原来的url进行reload 
  */  
 function refreshTab(cfg){  
-    var refresh_tab = cfg.tabTitle?$('#tabs').tabs('getTab',cfg.tabTitle):$('#tabs').tabs('getSelected');  
+    var refresh_tab = cfg.tabTitle?$('#main-tabs').tabs('getTab',cfg.tabTitle):$('#main-tabs').tabs('getSelected');
     if(refresh_tab && refresh_tab.find('iframe').length > 0){  
         var _refresh_ifram = refresh_tab.find('iframe')[0];  
         var refresh_url = cfg.url?cfg.url:_refresh_ifram.src;  
         _refresh_ifram.contentWindow.location.href=refresh_url;  
     }  
-}  
+}
 
+/**
+ * 清除所有tab
+ */
+function clearTabs() {
+    $('#main-tabs').tabs('closeAll');
+}
 

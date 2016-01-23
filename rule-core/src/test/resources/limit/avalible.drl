@@ -1,0 +1,29 @@
+package limit;
+dialect  "java"
+
+import com.cubbery.limit.WithDrawLimit;
+import java.math.BigDecimal;
+import com.cubbery.limit.TimeUtils;
+global com.cubbery.limit.Limit $limit;
+
+rule "limit-avalible"
+    activation-group "limit-avalible"
+    salience 51
+    lock-on-active true
+    when
+        $fact : WithDrawLimit()
+    then
+        int recordsTotalDay = $fact.getCustomerRecords().queryDay(TimeUtils.getDay(),$fact.getBankCardNumber());
+        int recordsTotalMon = $fact.getCustomerRecords().queryMoth(TimeUtils.getMonth(),$fact.getBankCardNumber());
+        System.out.println("recordsTotalMon:" + recordsTotalMon + "recordsTotalDay:" +recordsTotalDay );
+
+        int day = $limit.getLimitDay() - recordsTotalDay;//今天还能用多少？
+        int mon = $limit.getLimitMoth() - recordsTotalMon;//本月还能用多少？
+
+        System.out.println("limit:" + $limit );
+
+        int min = mon < day ? mon : day;
+        System.out.println("min:" + min );
+
+        $fact.setAvailable(min);//谁小，谁为可用额度
+end

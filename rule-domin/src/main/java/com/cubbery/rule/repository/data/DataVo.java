@@ -29,6 +29,9 @@ public class DataVo extends BaseVo {
 
     private DataType dataType;
     private DataDire dire;
+    private String typeDesc;
+    private String direDesc;
+
 
     public String getName() {
         return name;
@@ -68,6 +71,9 @@ public class DataVo extends BaseVo {
 
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
+        if(dataType != null) {
+            this.typeDesc = dataType.getDesc();
+        }
     }
 
     public String getDisplayName() {
@@ -84,5 +90,24 @@ public class DataVo extends BaseVo {
 
     public void setDire(DataDire dire) {
         this.dire = dire;
+        if(dire != null) {
+            this.direDesc = dire.getDesc();
+        }
+    }
+
+    public String getTypeDesc() {
+        return typeDesc;
+    }
+
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
+    }
+
+    public String getDireDesc() {
+        return direDesc;
+    }
+
+    public void setDireDesc(String direDesc) {
+        this.direDesc = direDesc;
     }
 }

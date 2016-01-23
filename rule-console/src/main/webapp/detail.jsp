@@ -34,8 +34,20 @@
 
 <%--<!--下边栏-->--%>
 <%--<div data-options="region:'south',split:true" style="height:50px;">--%>
-    <%--<div class="copy"></div>--%>
+<%--<div class="copy"></div>--%>
 <%--</div>--%>
+
+<!--右边栏-->
+<div data-options="region:'east',split:true" title="属性窗口" style="width:268px;">
+    <div id="propTabs" class="easyui-tabs"  border="false" style="height:450px">
+        <div iconCls="icon-reload" title="属性" split="true" style="width:268px;">
+            <table id="prop_table"></table>
+        </div>
+        <div id="bom_region" iconCls="icon-reload" title="数据对象" split="true" style="width:268px;">
+            <ul id="bom_tree"></ul>
+        </div>
+    </div>
+</div>
 
 <!--左边栏-->
 <div data-options="region:'west',split:true" title="规则场景" style="width:180px;padding1:1px;">
@@ -43,7 +55,7 @@
 </div>
 
 <!--中间栏-->
-<div data-options="region:'center',title:'操作窗口',iconCls:'icon-ok'">
+<div data-options="region:'center',title:'编辑窗口',iconCls:'icon-ok'">
     <div id="main-tabs" class="easyui-tabs" data-options="fit:true,border:false" style="overflow:hidden;">
 
     </div>
@@ -52,11 +64,56 @@
 <script type="text/javascript">
 
     $('#tree_menu').tree({
-        url:'/scenes.htm',
+        url:'/menu.htm',
         onClick: function(node){
-
+            var type=node.iconCls.replace('icon-', '');
+            clickNode(type,node.id);
+        },
+        onContextMenu: function(e, node){
+            e.preventDefault();
+            var mmid = '#mm_menu';
+            $(mmid).menu('show', {
+                left: e.pageX,
+                top: e.pageY
+            })
         }
     });
+
+    function clickNode(type,theUuid) {
+        clearTabs();
+
+        var href; var title;
+        if(type=='scene'){
+            href = "/scene.htm?id="+theUuid;
+            title = "场景";
+        }
+        else if(type=='package'){
+            href = "/package.htm?id="+theUuid;
+            title = "规则集";
+        }
+        else if(type=='rule'){
+            href = "/rule.htm?id="+theUuid;
+            title = "规则";
+        }
+        else if(type=='data'){
+            addTabs([{
+                href : "/data.htm?type=0&id="+theUuid,
+                title : "传入数据"
+            },{
+                href : "/data.htm?type=1&id="+theUuid,
+                title : "临时数据"
+            },{
+                href : "/data.htm?type=2&id="+theUuid,
+                title : "外部调用"
+            },{
+                href : "/data.htm?type=3&id="+theUuid,
+                title : "常量数据"
+            }]);
+            return;
+        }
+        addTab(title,href);
+    }
+
 </script>
 </html>
 

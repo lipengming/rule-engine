@@ -1,0 +1,15 @@
+package limit;
+dialect  "java"
+
+import com.cubbery.limit.WithDrawLimit
+global com.cubbery.limit.Limit $limit;
+
+rule "limit-cus"
+    salience 200
+    when
+        WithDrawLimit()
+    then
+       System.out.println("11-->" + $limit);
+       $limit.setLimitDay(500);
+       $limit.setLimitMoth(5300);
+end

@@ -1,0 +1,16 @@
+package limit;
+dialect  "java"
+
+import com.cubbery.limit.WithDrawLimit
+import com.cubbery.limit.Channel;
+global com.cubbery.limit.Limit $limit;
+
+rule "limit-channel"
+    salience 102
+    when
+        $wd : WithDrawLimit()
+    then
+       System.out.println("22-->" + $limit);
+       if($limit.getLimitDay() <= $wd.getBankCode().getMaxDay())  $limit.setLimitDay($wd.getBankCode().getMaxDay());
+       if($limit.getLimitMoth() <= $wd.getBankCode().getMaxMoth())  $limit.setLimitMoth($wd.getBankCode().getMaxMoth());
+end

@@ -18,8 +18,8 @@ package com.cubbery.rule.repository.code;
  */
 public enum DataType {
     INCOME("0","传入数据"),
-    TEMP("3","临时数据"),
-    IMPORT("3","外部调用"),
+    TEMP("1","临时数据"),
+    IMPORT("2","外部调用"),
     CONSTANT("3","常量数据")
     ;
     private String code;

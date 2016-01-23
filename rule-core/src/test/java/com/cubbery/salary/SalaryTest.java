@@ -49,18 +49,18 @@ public class SalaryTest {
         ).initialiseSession();
 
         Salary salary = new Salary();
-        salary.setPosition(Position.common);
-        salary.setAchievement(50000);
+        salary.setPosition(Position.common);//职位
+        salary.setAchievement(50000);//奖金
 
         ruleEngine.insert(salary);
         ruleEngine.fireAllRules();
 
-        assertEquals(1000.0, salary.getBase());
-        assertEquals(2000.0,salary.getBonus());
-        assertEquals(3000.0,salary.getPreTax());
+        assertEquals(1000.0, salary.getBase());//基本工资
+        assertEquals(2000.0,salary.getBonus());//奖金
+        assertEquals(3000.0,salary.getPreTax());//税前
 
-        assertEquals(155.0,salary.getIncomeTax());//((3000 - 1800) * 0.1 + 35)
-        assertEquals((3000.0-155.0),salary.getAfterTax());
+        assertEquals(155.0,salary.getIncomeTax());//((3000 - 1800) * 0.1 + 35) 所得税
+        assertEquals((3000.0-155.0),salary.getAfterTax());//税后
     }
 
 

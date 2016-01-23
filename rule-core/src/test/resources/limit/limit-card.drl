@@ -1,0 +1,18 @@
+package limit;
+dialect  "java"
+
+import com.cubbery.limit.WithDrawLimit;
+import java.math.BigDecimal;
+import com.cubbery.limit.TimeUtils;
+
+global com.cubbery.limit.Limit $limit;
+
+rule "limit-card"
+    salience 101
+    when
+        WithDrawLimit()
+    then
+       System.out.println("33-->" + $limit);
+       if($limit.getLimitDay() >= 500) $limit.setLimitDay(500);
+       if($limit.getLimitMoth() >= 5000) $limit.setLimitMoth(5000);
+end
